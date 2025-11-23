@@ -1,0 +1,34 @@
+@model OpenIdDict.ServerExample.Models.AccountLoginViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Demo";
+}
+
+@if (Model.ExternalProviders.Any())
+{
+    <div class="choose-provider">
+        <img src="~/static/graphics/active-login-logo-fingerprint.svg" alt="Active Login" class="choose-provider-logo" />
+
+        <h1 class="mb-5 mt-2 font-weight-normal">Active Login with OpenIddict</h1>
+
+        <div class="d-grid gap-2">
+            @foreach (var provider in Model.ExternalProviders)
+            {
+                <a class="btn btn-primary btn-lg"
+                   asp-action="ExternalLogin"
+                   asp-route-provider="@provider.AuthenticationScheme"
+                   asp-route-returnUrl="@Html.Raw(Model.ReturnUrl)">
+                    @provider.DisplayName
+                </a>
+            }
+        </div>
+    </div>
+}
+
+@if (!Model.ExternalProviders.Any())
+{
+    <div class="alert alert-warning">
+        <strong>Invalid login request</strong>
+        There are no login schemes configured for this client.
+    </div>
+}

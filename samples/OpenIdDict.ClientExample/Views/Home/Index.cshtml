@@ -1,0 +1,54 @@
+@model OpenIdDict.ClientExample.Models.HomeIndexViewModel
+@{
+    ViewData["Title"] = "Demo";
+}
+
+<h1 class="text-center">Active Login</h1>
+<h2 class="text-center">OpenIdDict Client Example</h2>
+
+<h2 class="h4 m2-1 mt-5 text-center">Welcome @Model.GivenName!</h2>
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Given name</dt>
+            <dd class="col-sm-8">@Model.GivenName</dd>
+
+            <dt class="col-sm-4">Family name</dt>
+            <dd class="col-sm-8">@Model.FamilyName</dd>
+
+            <dt class="col-sm-4">Full name</dt>
+            <dd class="col-sm-8">@Model.Name</dd>
+
+            <dt class="col-sm-4">Swedish personal identity number</dt>
+            <dd class="col-sm-8">@Model.PersonalIdentityNumber</dd>
+
+            <dt class="col-sm-4">Birthdate</dt>
+            <dd class="col-sm-8">@Model.Birthdate</dd>
+
+            <dt class="col-sm-4">Gender</dt>
+            <dd class="col-sm-8">@Model.Gender</dd>
+        </dl>
+    </div>
+</div>
+
+<h2 class="h4 m2-1 mt-5 text-center">All claims</h2>
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            @foreach (var claim in Model.Claims)
+            {
+                <dt class="col-sm-4">@claim.Type</dt>
+                <dd class="col-sm-8">@claim.Value</dd>
+            }
+        </dl>
+    </div>
+</div>
+
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <div class="mt-4">
+        <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+            <input type="submit" value="Logout" class="btn btn-info btn-block w-100" />
+        </form>
+    </div>
+}
